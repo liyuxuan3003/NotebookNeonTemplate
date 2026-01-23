@@ -1,0 +1,27 @@
+\chapter{算法测试}
+
+\begin{BoxAlgorithm}[测试算法]
+    该算法会求解$\vb{L}\vb{x}=\vb{b}$
+    \begin{Algoplain}
+        $\vb{b}(1)=\vb{b}(1)/L(1,1)$\;
+        \For{$i=2:n$}{
+            $\vb{b}(i)=[\vb{b}(i)-\vb{L}(i,1:i-1)\cdot\vb{b}(i,1:i-1)]/\vb{L}(i,i)$\;
+        }
+    \end{Algoplain}
+
+    该算法
+\end{BoxAlgorithm}
+
+\begin{BoxProcess}[测试算法]
+    该算法会求解$\vb{L}\vb{x}=\vb{b}$
+    \begin{Algoplain}
+        $\vb{b}(1)=\vb{b}(1)/L(1,1)$\;
+        \For{$i=2:n$}{
+            $\vb{b}(i)=[\vb{b}(i)-\vb{L}(i,1:i-1)\cdot\vb{b}(i,1:i-1)]/\vb{L}(i,i)$\;
+        }
+    \end{Algoplain}
+
+    该算法
+\end{BoxProcess}
+
+\cref{alg:测试算法}
