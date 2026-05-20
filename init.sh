@@ -52,7 +52,6 @@ git mv "$DIR_TEMPLATE/$FILE_MAIN" "$DIR_TEMPLATE/$PROJECT.tex"
 # Update directory
 git mv "$DIR_TEMPLATE/" "$PROJECT/"
 
-# Update template README links
 
 # Commit and checkout to dev
 git add -A
