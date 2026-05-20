@@ -24,20 +24,13 @@ if [ ! -f "$DIR_TEMPLATE/$FILE_MAIN" ]; then echo "Error: Already initialized?";
 # Init submodules
 git submodule update --init --recursive
 
-# Record current branch
-branch=$(git branch --show-current)
 # Record current remote
 remote=$(git remote | head -1)
+# Record current branch
+branch=$(git branch --show-current)
 
-# Set template remote
-git remote rename "$remote" notebook-neon
-
-# Set template branch
-git branch notebook-neon
-git branch notebook-neon --set-upstream-to="notebook-neon/$branch"
-
-# Set dummy origin
-git remote add origin my-remote-repo.git
+# Remove template remote
+git remote remove "$remote"
 
 # Rename tags
 for t in $(git tag -l); do git tag tp-$t $t; git tag --delete $t; done
@@ -46,6 +39,7 @@ for t in $(git tag -l); do git tag tp-$t $t; git tag --delete $t; done
 if [ "$branch" != "master" ]; then git branch -m "$branch" master; fi
 
 # Update readme
+sed -i "s|$DIR_TEMPLATE/|$PROJECT/|g" "README.md"
 git mv "README.md" "$FILE_README"
 echo "# $PROJECT" > "README.md"
 
@@ -57,6 +51,8 @@ git mv "$DIR_TEMPLATE/$FILE_MAIN" "$DIR_TEMPLATE/$PROJECT.tex"
 
 # Update directory
 git mv "$DIR_TEMPLATE/" "$PROJECT/"
+
+# Update template README links
 
 # Commit and checkout to dev
 git add -A
