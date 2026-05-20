@@ -6,7 +6,7 @@ set -euo pipefail
 # Config
 DIR_TEMPLATE="Notebook"
 FILE_MAIN="Notebook.tex"
-FILE_README="NotebookNeon.md"
+FILE_README="NotebookNeonTemplate.md"
 
 # Usage
 usage() {
@@ -52,7 +52,6 @@ git mv "$DIR_TEMPLATE/$FILE_MAIN" "$DIR_TEMPLATE/$PROJECT.tex"
 # Update directory
 git mv "$DIR_TEMPLATE/" "$PROJECT/"
 
-# Update template README links
 
 # Commit and checkout to dev
 git add -A
