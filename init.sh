@@ -39,6 +39,7 @@ for t in $(git tag -l); do git tag tp-$t $t; git tag --delete $t; done
 if [ "$branch" != "master" ]; then git branch -m "$branch" master; fi
 
 # Update readme
+sed -i "s|$DIR_TEMPLATE/|$PROJECT/|g" "README.md"
 git mv "README.md" "$FILE_README"
 echo "# $PROJECT" > "README.md"
 
@@ -52,7 +53,6 @@ git mv "$DIR_TEMPLATE/$FILE_MAIN" "$DIR_TEMPLATE/$PROJECT.tex"
 git mv "$DIR_TEMPLATE/" "$PROJECT/"
 
 # Update template README links
-sed -i "s|$DIR_TEMPLATE/|$PROJECT/|g" "$FILE_README"
 
 # Commit and checkout to dev
 git add -A
