@@ -6,7 +6,7 @@ set -euo pipefail
 # Config
 DIR_TEMPLATE="Notebook"
 FILE_MAIN="Notebook.tex"
-FILE_README="NotebookNeon.md"
+FILE_README="NotebookNeonTemplate.md"
 
 # Usage
 usage() {
