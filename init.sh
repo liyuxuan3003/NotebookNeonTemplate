@@ -61,4 +61,5 @@ git mv "$DIR_TEMPLATE/" "$PROJECT/"
 # Commit and checkout to dev
 git add -A
 git commit -m "Init $PROJECT"
+git branch --unset-upstream master
 git checkout -b dev
