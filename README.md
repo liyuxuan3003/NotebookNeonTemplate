@@ -4,6 +4,8 @@ NotebookNeonTemplate是一个开箱即用的LaTeX模板，适用于长文档，�
 
 NotebookNeonTemplate是LumosLaTeX计划的一部分：https://github.com/liyuxuan3003/LumosLaTeX
 
+https://github.com/liyuxuan3003/NotebookNeonTemplate.git
+
 ## 引入方式
 
 克隆模板仓库
