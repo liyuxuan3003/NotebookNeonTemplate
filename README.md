@@ -73,8 +73,8 @@ make clean
 
 | 子模块 | 文档 |
 |--------|------|
-| `notebook-neon` | [README](NotebookNeonTemplate/notebook-neon/README.md) |
-| `minimus` | [README](NotebookNeonTemplate/minimus/README.md) |
-| `makefile-latex` | [README](NotebookNeonTemplate/makefile-latex/README.md) |
-| `standalone-silicon` | [README](NotebookNeonTemplate/standalone-silicon/README.md) |
-| `pyjool` | [README](NotebookNeonTemplate/pyjool/README.md) |
+| `notebook-neon` | [README](Notebook/notebook-neon/README.md) |
+| `minimus` | [README](Notebook/minimus/README.md) |
+| `makefile-latex` | [README](Notebook/makefile-latex/README.md) |
+| `standalone-silicon` | [README](Notebook/standalone-silicon/README.md) |
+| `pyjool` | [README](Notebook/pyjool/README.md) |
