@@ -36,6 +36,9 @@ git remote rename "$remote" notebook-neon
 git branch notebook-neon
 git branch notebook-neon --set-upstream-to="notebook-neon/$branch"
 
+# Set dummy origin
+git remote add origin my-remote-repo.git
+
 # Rename tags
 for t in $(git tag -l); do git tag tp-$t $t; git tag --delete $t; done
 
