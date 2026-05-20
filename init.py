@@ -4,6 +4,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+DIR_TEMPLATE = "Notebook"
+FILE_MAIN = "Notebook.tex"
+FILE_README = "README.md"
+FILE_README_OLD = "NotebookNeon.md"
+
 
 def run(cmd, **kwargs):
     return subprocess.run(cmd, shell=True, check=True, **kwargs)
@@ -14,8 +19,8 @@ def main():
     parser.add_argument("project", help="project name")
     args = parser.parse_args()
 
-    if not Path("Notebook/Notebook.tex").exists():
-        sys.exit("Error: Notebook/Notebook.tex not found. Already initialized?")
+    if not Path(f"{DIR_TEMPLATE}/{FILE_MAIN}").exists():
+        sys.exit(f"Error: {DIR_TEMPLATE}/{FILE_MAIN} not found. Already initialized?")
 
     # 1. init submodules
     run("git submodule update --init --recursive")
@@ -45,15 +50,15 @@ def main():
         run(f"git branch -m {current} master")
 
     # 7. rename directory and main file
-    run(f"git mv Notebook/ {args.project}/")
-    run(f"git mv {args.project}/Notebook.tex {args.project}/{args.project}.tex")
+    run(f"git mv {DIR_TEMPLATE}/ {args.project}/")
+    run(f"git mv {args.project}/{FILE_MAIN} {args.project}/{args.project}.tex")
 
     # 8. update Makefile
     run(f"sed -i 's/^PROJECT:=.*/PROJECT:={args.project}/' {args.project}/Makefile")
 
     # 9. README
-    run("git mv README.md NotebookNeon.md")
-    Path("README.md").write_text(f"# {args.project}\n")
+    run(f"git mv {FILE_README} {FILE_README_OLD}")
+    Path(FILE_README).write_text(f"# {args.project}\n")
 
     # 10. commit and checkout dev
     run("git add -A")
