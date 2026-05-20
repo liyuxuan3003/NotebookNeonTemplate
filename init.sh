@@ -23,20 +23,19 @@ if [ ! -f "$DIR_TEMPLATE/$FILE_MAIN" ]; then echo "Error: Already initialized?";
 
 # Init submodules
 git submodule update --init --recursive
+
 # Record current remote
 remote=$(git remote | head -1)
+# Record current branch
+branch=$(git branch --show-current)
 
 # Remove template remote
 git remote remove "$remote"
-
-# Set dummy origin
-git remote add origin my-remote-repo.git
 
 # Rename tags
 for t in $(git tag -l); do git tag tp-$t $t; git tag --delete $t; done
 
 # Rename branch to master
-branch=$(git branch --show-current)
 if [ "$branch" != "master" ]; then git branch -m "$branch" master; fi
 
 # Update readme
