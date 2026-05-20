@@ -1,66 +1,60 @@
 #!/usr/bin/env bash
+
+# Fail safe
 set -euo pipefail
 
+# Config
 DIR_TEMPLATE="Notebook"
 FILE_MAIN="Notebook.tex"
-FILE_README="README.md"
-FILE_README_OLD="NotebookNeon.md"
+FILE_README="NotebookNeon.md"
 
+# Usage
 usage() {
     echo "Usage: $0 PROJECT"
     exit 1
 }
 
-if [ $# -ne 1 ]; then
-    usage
-fi
-
+# Argument
+if [ $# -ne 1 ]; then usage; fi
 PROJECT="$1"
 
-if [ ! -f "$DIR_TEMPLATE/$FILE_MAIN" ]; then
-    echo "Error: $DIR_TEMPLATE/$FILE_MAIN not found. Already initialized?"
-    exit 1
-fi
+# Guard
+if [ ! -f "$DIR_TEMPLATE/$FILE_MAIN" ]; then echo "Error: Already initialized?"; exit 1; fi
 
-# 1. init submodules
+# Init submodules
 git submodule update --init --recursive
 
-# 2. record current branch
-current=$(git branch --show-current)
-
-# 3. rename tags
-for tag in $(git tag -l); do
-    git tag "tp-$tag" "$tag^{}"
-    git tag -d "$tag"
-done
-
-# 4. notebook-neon branch
-git branch notebook-neon
-
-# 5. rename remote and set tracking
+# Record current branch
+branch=$(git branch --show-current)
+# Record current remote
 remote=$(git remote | head -1)
-if [ -n "$remote" ]; then
-    git remote rename "$remote" notebook-neon
-    git branch notebook-neon --set-upstream-to="notebook-neon/$current"
-fi
 
-# 6. rename branch to master
-if [ "$current" != "master" ]; then
-    git branch -m "$current" master
-fi
+# Set template remote
+git remote rename "$remote" notebook-neon
 
-# 7. rename directory and main file
+# Set template branch
+git branch notebook-neon --set-upstream-to="notebook-neon/$branch"
+
+# Rename tags
+for t in $(git tag -l); do git tag tp-$t $t; git tag --delete $t; done
+
+# Rename branch to master
+if [ "$branch" != "master" ]; then git branch -m "$branch" master; fi
+
+# Update readme
+git mv "README.md" "$FILE_README"
+echo "# $PROJECT" > "README.md"
+
+# Update makefile
+sed -i "s/^PROJECT:=.*/PROJECT:=$PROJECT/" "$DIR_TEMPLATE/Makefile"
+
+# Update main tex
+git mv "$DIR_TEMPLATE/$FILE_MAIN" "$DIR_TEMPLATE/$PROJECT.tex"
+
+# Update directory
 git mv "$DIR_TEMPLATE/" "$PROJECT/"
-git mv "$PROJECT/$FILE_MAIN" "$PROJECT/$PROJECT.tex"
 
-# 8. update Makefile
-sed -i "s/^PROJECT:=.*/PROJECT:=$PROJECT/" "$PROJECT/Makefile"
-
-# 9. README
-git mv "$FILE_README" "$FILE_README_OLD"
-echo "# $PROJECT" > "$FILE_README"
-
-# 10. commit and checkout dev
+# Commit and checkout to dev
 git add -A
 git commit -m "Init $PROJECT"
 git checkout -b dev
