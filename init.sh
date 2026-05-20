@@ -33,6 +33,7 @@ remote=$(git remote | head -1)
 git remote rename "$remote" notebook-neon
 
 # Set template branch
+git branch notebook-neon
 git branch notebook-neon --set-upstream-to="notebook-neon/$branch"
 
 # Rename tags
